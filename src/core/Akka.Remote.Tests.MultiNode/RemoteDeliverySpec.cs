@@ -1,4 +1,11 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="RemoteDeliverySpec.cs" company="Akka.NET Project">
+//     Copyright (C) 2009-2018 Lightbend Inc. <http://www.lightbend.com>
+//     Copyright (C) 2013-2018 .NET Foundation <https://github.com/akkadotnet/akka.net>
+// </copyright>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Akka.Actor;
@@ -17,9 +24,9 @@ namespace Akka.Remote.Tests.MultiNode
             CommonConfig = DebugConfig(false);
         }
 
-        public RoleName First { get; private set; }
-        public RoleName Second { get; private set; }
-        public RoleName Third { get; private set; }
+        public RoleName First { get; }
+        public RoleName Second { get; }
+        public RoleName Third { get; }
 
         public sealed class Letter
         {
@@ -46,28 +53,16 @@ namespace Akka.Remote.Tests.MultiNode
         }
     }
 
-    public class RemoteDeliveryMultiNetNode1 : RemoteDeliverySpec
-    {
-    }
-
-    public class RemoteDeliveryMultiNetNode2 : RemoteDeliverySpec
-    {
-    }
-
-    public class RemoteDeliveryMultiNetNode3 : RemoteDeliverySpec
-    {
-    }
-
     public class RemoteDeliverySpec : MultiNodeSpec
     {
         private readonly RemoteDeliveryMultiNetSpec _config;
         private readonly Func<RoleName, string, IActorRef> _identify;
 
-        protected RemoteDeliverySpec() : this(new RemoteDeliveryMultiNetSpec())
+        public RemoteDeliverySpec() : this(new RemoteDeliveryMultiNetSpec())
         {
         }
 
-        protected RemoteDeliverySpec(RemoteDeliveryMultiNetSpec config) : base(config)
+        protected RemoteDeliverySpec(RemoteDeliveryMultiNetSpec config) : base(config, typeof(RemoteDeliverySpec))
         {
             _config = config;
 

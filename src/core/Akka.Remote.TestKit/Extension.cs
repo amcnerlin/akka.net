@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Extension.cs" company="Akka.NET Project">
-//     Copyright (C) 2009-2015 Typesafe Inc. <http://www.typesafe.com>
-//     Copyright (C) 2013-2015 Akka.NET project <https://github.com/akkadotnet/akka.net>
+//     Copyright (C) 2009-2018 Lightbend Inc. <http://www.lightbend.com>
+//     Copyright (C) 2013-2018 .NET Foundation <https://github.com/akkadotnet/akka.net>
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ using Akka.Util.Internal;
 namespace Akka.Remote.TestKit
 {
     /// <summary>
-    /// Access to the <see cref="TestConductor"></see> extension:
+    /// Access to the <see cref="TestConductor"/> extension:
     /// 
     /// {{{
     /// var tc = TestConductor(system)
@@ -76,12 +76,15 @@ namespace Akka.Remote.TestKit
         {
             _settings = new TestConductorSettings(system.Settings.Config.WithFallback(TestConductorConfigFactory.Default())
                       .GetConfig("akka.testconductor"));
-            _transport = system.AsInstanceOf<ExtendedActorSystem>().Provider.AsInstanceOf<RemoteActorRefProvider>().Transport;
+            _transport = system.AsInstanceOf<ExtendedActorSystem>().Provider.AsInstanceOf<IRemoteActorRefProvider>().Transport;
             _address = _transport.DefaultAddress;
             _system = system;
         }
     }
 
+    /// <summary>
+    /// Settings used to operate the <see cref="TestConductor"/>.
+    /// </summary>
     public class TestConductorSettings
     {
         readonly TimeSpan _connectTimeout;
